@@ -17,7 +17,8 @@ class MainActivity : AppCompatActivity() {
 
 //        convertIntToByteArray()
 //        convertToBase64Str()
-        convertHexStringToByteArray()
+//        convertHexStringToByteArray()
+        convertByteArrayToHexString()
     }
 
     fun convertIntToByteArray() {
@@ -162,9 +163,25 @@ class MainActivity : AppCompatActivity() {
             result[ i / 2] = byte
         }
         return result
-
     }
 
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+    fun convertByteArrayToHexString() {
+        val array = arrayOf<Byte>(25, 100, 20, 128.toByte(), 127, 93)
+        println("Hexadecimal(${byteArrayToHexString(array)})")
+        Log.e("HAT","Hexadecimal(${byteArrayToHexString(array)})")
+    }
+
+    private fun byteArrayToHexString (array: Array<Byte>): String {
+        val result = StringBuilder(array.size * 2)
+        for (byte in array) {
+            val toAppend = String.format("%X", byte) // hexadecimal
+            result.append(toAppend).append("-")
+        }
+        result.setLength(result.length - 1) // remove last '-'
+        return result.toString()
+    }
 
 
 }
