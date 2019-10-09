@@ -16,8 +16,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 //        convertIntToByteArray()
-        convertToBase64Str()
-//        convertHexStringToByteArray()
+//        convertToBase64Str()
+        convertHexStringToByteArray()
     }
 
     fun convertIntToByteArray() {
@@ -133,6 +133,38 @@ class MainActivity : AppCompatActivity() {
 
         return result.toString()
     }
+
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+    fun convertHexStringToByteArray() {
+        val hexString = "A3-FF-23-AD-A3"
+
+        println("ByteArray(" +
+                "${hexStringToByteArray(hexString).joinToString {
+                        x -> (x.toInt().toUnsignedInt()).toString() + " " }}) " )
+
+        Log.e("HAT","ByteArray(" +
+                "${hexStringToByteArray(hexString).joinToString {
+                        x -> (x.toInt().toUnsignedInt()).toString() + " " }}) ")
+    }
+
+    private inline fun Int.toUnsignedInt(): Int = this and 0xFF
+
+    private fun hexStringToByteArray(str: String): Array<Byte> {
+
+        val hexStr = str.replace("-", "") // remove '-'
+
+        var result = Array<Byte>(hexStr.length / 2, {0})
+
+        for (i in 0 until hexStr.length step 2) {
+            var byte = Integer.valueOf(hexStr.substring(i, i+2), 16).toByte()
+
+            result[ i / 2] = byte
+        }
+        return result
+
+    }
+
 
 
 }
